@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress - OCR Computer Science Revision</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .nav-link {
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .nav-link:hover {
+            color: #3182CE;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #3182CE;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .nav-link.active {
+            color: #3182CE;
+        }
+        .nav-link.active::after {
+            width: 100%;
+        }
+        .progress-ring {
+            transition: stroke-dasharray 0.5s ease-in-out;
+        }
+        .achievement-badge {
+            transition: all 0.3s ease;
+        }
+        .achievement-badge:hover {
+            transform: scale(1.05);
+        }
+        .achievement-badge.earned {
+            background: linear-gradient(135deg, #68D391, #38A169);
+            color: white;
+        }
+        .achievement-badge.locked {
+            background: #F7FAFC;
+            color: #A0AEC0;
+            border: 2px dashed #E2E8F0;
+        }
+        .calendar-day {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .calendar-day:hover {
+            transform: scale(1.1);
+        }
+        .calendar-day.completed {
+            background: #68D391;
+            color: white;
+        }
+        .calendar-day.today {
+            background: #3182CE;
+            color: white;
+            font-weight: bold;
+        }
+        .calendar-day.pending {
+            background: #E2E8F0;
+            color: #718096;
+        }
+        .calendar-day.partial {
+            background: #F6AD55;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-4">
+                    <h1 class="text-xl font-bold text-gray-800">Revision Timeline</h1>
+                    <span class="mono text-sm text-gray-500">OCR Computer Science</span>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 font-medium">Timeline</a>
+                    <a href="topics.html" class="nav-link text-gray-700 font-medium">Topics</a>
+                    <a href="progress.html" class="nav-link text-gray-700 font-medium active">Progress</a>
+                </nav>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-700">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-200">
+        <div class="px-6 py-4 space-y-2">
+            <a href="index.html" class="block text-gray-700 font-medium py-2">Timeline</a>
+            <a href="topics.html" class="block text-gray-700 font-medium py-2">Topics</a>
+            <a href="progress.html" class="block text-gray-700 font-medium py-2">Progress</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-6 py-8">
+        <!-- Page Header -->
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Progress Dashboard</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Track your revision progress with detailed analytics, completion metrics, and achievement milestones.
+            </p>
+        </div>
+
+        <!-- Key Metrics -->
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <!-- Overall Progress -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-center">
+                <div class="relative w-20 h-20 mx-auto mb-4">
+                    <svg class="w-20 h-20 transform -rotate-90">
+                        <circle cx="40" cy="40" r="36" stroke="#E2E8F0" stroke-width="8" fill="none"/>
+                        <circle id="progress-circle" cx="40" cy="40" r="36" stroke="#3182CE" stroke-width="8" 
+                                fill="none" stroke-linecap="round" class="progress-ring"/>
+                    </svg>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <span id="overall-percentage" class="text-xl font-bold text-gray-800">0%</span>
+                    </div>
+                </div>
+                <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Overall Progress</h3>
+                <p class="text-2xl font-bold text-gray-800" id="completed-topics">0</p>
+                <p class="text-xs text-gray-500">of 156 topics</p>
+            </div>
+
+            <!-- Study Streak -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-center">
+                <div class="text-4xl mb-4">🔥</div>
+                <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Study Streak</h3>
+                <p class="text-2xl font-bold text-gray-800" id="study-streak">0</p>
+                <p class="text-xs text-gray-500">consecutive days</p>
+            </div>
+
+            <!-- Days Remaining -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-center">
+                <div class="text-4xl mb-4">📅</div>
+                <h3 class="text-sm font-medium text-gray-500 uppercase-tracking-wide">Days Remaining</h3>
+                <p class="text-2xl font-bold text-gray-800" id="days-remaining">0</p>
+                <p class="text-xs text-gray-500">until March 16, 2026</p>
+            </div>
+
+            <!-- Average Daily -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-center">
+                <div class="text-4xl mb-4">📊</div>
+                <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Daily Average</h3>
+                <p class="text-2xl font-bold text-gray-800" id="daily-average">0</p>
+                <p class="text-xs text-gray-500">topics per day</p>
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <!-- Difficulty Distribution Chart -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Difficulty Distribution</h3>
+                <div id="difficulty-chart" style="height: 300px;"></div>
+            </div>
+
+            <!-- Component Progress Chart -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Component Progress</h3>
+                <div id="component-chart" style="height: 300px;"></div>
+            </div>
+        </section>
+
+        <!-- Weekly Overview -->
+        <section class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
+            <h3 class="text-lg font-semibold text-gray-800 mb-6">7-Day Overview</h3>
+            <div id="weekly-overview" class="grid grid-cols-7 gap-4">
+                <!-- Weekly overview cards will be generated here -->
+            </div>
+        </section>
+
+        <!-- Study Calendar -->
+        <section class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg font-semibold text-gray-800">Study Calendar</h3>
+                <div class="flex space-x-2">
+                    <button id="prev-month" class="p-2 text-gray-600 hover:text-gray-800">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                    </button>
+                    <span id="current-month" class="px-4 py-2 font-medium text-gray-800"></span>
+                    <button id="next-month" class="p-2 text-gray-600 hover:text-gray-800">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="calendar-grid" class="grid grid-cols-7 gap-2">
+                <!-- Calendar will be generated here -->
+            </div>
+            <div class="flex justify-center space-x-6 mt-6 text-sm">
+                <div class="flex items-center">
+                    <div class="w-4 h-4 bg-green-500 rounded mr-2"></div>
+                    <span>Completed</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-4 h-4 bg-blue-500 rounded mr-2"></div>
+                    <span>Today</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-4 h-4 bg-yellow-500 rounded mr-2"></div>
+                    <span>Partial</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-4 h-4 bg-gray-300 rounded mr-2"></div>
+                    <span>Pending</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Achievements -->
+        <section class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-6">Achievements</h3>
+            <div id="achievements-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <!-- Achievement badges will be generated here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-16">
+        <div class="max-w-6xl mx-auto px-6 py-8">
+            <div class="text-center text-gray-500">
+                <p class="mono text-sm">OCR Computer Science A-Level Revision Timeline</p>
+                <p class="text-xs mt-2">Built with modern web technologies for effective study planning</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script>
+        // Progress Page Specific Logic
+        class ProgressPage {
+            constructor() {
+                this.currentMonth = new Date();
+                this.achievements = [
+                    { id: 'first_topic', name: 'First Steps', description: 'Complete your first topic', icon: '🎯', threshold: 1 },
+                    { id: 'week_streak', name: 'Week Warrior', description: '7-day study streak', icon: '🔥', threshold: 7 },
+                    { id: 'half_complete', name: 'Halfway There', description: 'Complete 50% of topics', icon: '⭐', threshold: 78 },
+                    { id: 'foundation_master', name: 'Foundation Master', description: 'Complete all foundation topics', icon: '📚', threshold: 25 },
+                    { id: 'intermediate_champion', name: 'Intermediate Champion', description: 'Complete all intermediate topics', icon: '💪', threshold: 78 },
+                    { id: 'advanced_expert', name: 'Advanced Expert', description: 'Complete all advanced topics', icon: '🧠', threshold: 53 },
+                    { id: 'component_1_complete', name: 'Computer Systems Pro', description: 'Complete Component 1', icon: '💻', threshold: 100 },
+                    { id: 'component_2_complete', name: 'Algorithms Ace', description: 'Complete Component 2', icon: '⚡', threshold: 100 },
+                    { id: 'perfect_week', name: 'Perfect Week', description: 'Complete all topics for 7 days', icon: '🏆', threshold: 1 },
+                    { id: 'revision_master', name: 'Revision Master', description: 'Complete all 156 topics', icon: '👑', threshold: 156 },
+                    { id: 'consistent_learner', name: 'Consistent Learner', description: '30-day study streak', icon: '📈', threshold: 30 },
+                    { id: 'speed_demon', name: 'Speed Demon', description: 'Complete 10 topics in one day', icon: '🚀', threshold: 10 }
+                ];
+                this.init();
+            }
+
+            async init() {
+                await revisionData.init();
+                this.bindEvents();
+                this.updateMetrics();
+                this.renderCharts();
+                this.renderWeeklyOverview();
+                this.renderCalendar();
+                this.renderAchievements();
+                this.initializeAnimations();
+            }
+
+            bindEvents() {
+                // Mobile menu toggle
+                const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+                const mobileMenu = document.getElementById('mobile-menu');
+                
+                if (mobileMenuBtn && mobileMenu) {
+                    mobileMenuBtn.addEventListener('click', () => {
+                        mobileMenu.classList.toggle('hidden');
+                    });
+                }
+
+                // Calendar navigation
+                const prevMonth = document.getElementById('prev-month');
+                const nextMonth = document.getElementById('next-month');
+
+                if (prevMonth) {
+                    prevMonth.addEventListener('click', () => {
+                        this.currentMonth.setMonth(this.currentMonth.getMonth() - 1);
+                        this.renderCalendar();
+                    });
+                }
+
+                if (nextMonth) {
+                    nextMonth.addEventListener('click', () => {
+                        this.currentMonth.setMonth(this.currentMonth.getMonth() + 1);
+                        this.renderCalendar();
+                    });
+                }
+            }
+
+            updateMetrics() {
+                const stats = revisionData.calculateProgressStats();
+                
+                // Overall progress
+                const progressCircle = document.getElementById('progress-circle');
+                const overallPercentage = document.getElementById('overall-percentage');
+                const completedTopics = document.getElementById('completed-topics');
+                
+                if (progressCircle && overallPercentage && completedTopics) {
+                    const circumference = 2 * Math.PI * 36;
+                    const offset = circumference - (stats.percentage / 100) * circumference;
+                    
+                    anime({
+                        targets: progressCircle,
+                        'stroke-dasharray': `${circumference} ${circumference}`,
+                        'stroke-dashoffset': [circumference, offset],
+                        duration: 1500,
+                        easing: 'easeInOutQuad'
+                    });
+
+                    anime({
+                        targets: overallPercentage,
+                        innerHTML: [0, stats.percentage],
+                        duration: 1500,
+                        round: 1,
+                        easing: 'easeInOutQuad',
+                        update: function(anim) {
+                            overallPercentage.innerHTML = Math.round(anim.animatables[0].target.innerHTML) + '%';
+                        }
+                    });
+
+                    anime({
+                        targets: completedTopics,
+                        innerHTML: [0, stats.completed],
+                        duration: 1500,
+                        round: 1,
+                        easing: 'easeInOutQuad'
+                    });
+                }
+
+                // Study streak
+                const studyStreak = document.getElementById('study-streak');
+                if (studyStreak) {
+                    anime({
+                        targets: studyStreak,
+                        innerHTML: [0, stats.streak],
+                        duration: 1000,
+                        round: 1,
+                        easing: 'easeInOutQuad'
+                    });
+                }
+
+                // Days remaining
+                const daysRemaining = document.getElementById('days-remaining');
+                if (daysRemaining) {
+                    const today = new Date();
+                    const endDate = revisionData.endDate;
+                    const daysLeft = Math.ceil((endDate - today) / (1000 * 60 * 60 * 24));
+                    
+                    anime({
+                        targets: daysRemaining,
+                        innerHTML: [0, Math.max(0, daysLeft)],
+                        duration: 1000,
+                        round: 1,
+                        easing: 'easeInOutQuad'
+                    });
+                }
+
+                // Daily average
+                const dailyAverage = document.getElementById('daily-average');
+                if (dailyAverage) {
+                    const totalDays = revisionData.getTotalDays();
+                    const average = Math.round((stats.completed / totalDays) * 10) / 10;
+                    
+                    anime({
+                        targets: dailyAverage,
+                        innerHTML: [0, average],
+                        duration: 1000,
+                        round: 10,
+                        easing: 'easeInOutQuad'
+                    });
+                }
+            }
+
+            renderCharts() {
+                this.renderDifficultyChart();
+                this.renderComponentChart();
+            }
+
+            renderDifficultyChart() {
+                const chartContainer = document.getElementById('difficulty-chart');
+                if (!chartContainer) return;
+
+                const chart = echarts.init(chartContainer);
+                const stats = revisionData.calculateProgressStats();
+                
+                const option = {
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b}: {c} ({d}%)'
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 10,
+                        data: ['Foundation', 'Intermediate', 'Advanced']
+                    },
+                    series: [
+                        {
+                            name: 'Difficulty Distribution',
+                            type: 'pie',
+                            radius: ['50%', '70%'],
+                            avoidLabelOverlap: false,
+                            label: {
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                label: {
+                                    show: true,
+                                    fontSize: '18',
+                                    fontWeight: 'bold'
+                                }
+                            },
+                            labelLine: {
+                                show: false
+                            },
+                            data: [
+                                {
+                                    value: stats.difficulty.foundation,
+                                    name: 'Foundation',
+                                    itemStyle: { color: '#68D391' }
+                                },
+                                {
+                                    value: stats.difficulty.intermediate,
+                                    name: 'Intermediate',
+                                    itemStyle: { color: '#F6AD55' }
+                                },
+                                {
+                                    value: stats.difficulty.advanced,
+                                    name: 'Advanced',
+                                    itemStyle: { color: '#FC8181' }
+                                }
+                            ]
+                        }
+                    ]
+                };
+
+                chart.setOption(option);
+                
+                // Responsive
+                window.addEventListener('resize', () => {
+                    chart.resize();
+                });
+            }
+
+            renderComponentChart() {
+                const chartContainer = document.getElementById('component-chart');
+                if (!chartContainer) return;
+
+                const chart = echarts.init(chartContainer);
+                
+                // Calculate component progress
+                const component1Topics = revisionData.learningObjectives.filter(obj => obj.componentId === '01');
+                const component2Topics = revisionData.learningObjectives.filter(obj => obj.componentId === '02');
+                
+                const component1Completed = component1Topics.filter(obj => obj.completed).length;
+                const component2Completed = component2Topics.filter(obj => obj.completed).length;
+                
+                const component1Percentage = Math.round((component1Completed / component1Topics.length) * 100);
+                const component2Percentage = Math.round((component2Completed / component2Topics.length) * 100);
+
+                const option = {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
+                        },
+                        formatter: function(params) {
+                            const data = params[0];
+                            return `${data.name}<br/>Completed: ${data.value}%<br/>Topics: ${data.value > 0 ? (data.seriesName === 'Computer Systems' ? component1Completed : component2Completed) : 0}/${data.seriesName === 'Computer Systems' ? component1Topics.length : component2Topics.length}`;
+                        }
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: ['Computer Systems', 'Algorithms & Programming'],
+                        axisTick: {
+                            alignWithLabel: true
+                        }
+                    },
+                    yAxis: {
+                        type: 'value',
+                        max: 100,
+                        axisLabel: {
+                            formatter: '{value}%'
+                        }
+                    },
+                    series: [
+                        {
+                            name: 'Progress',
+                            type: 'bar',
+                            barWidth: '60%',
+                            data: [
+                                {
+                                    value: component1Percentage,
+                                    itemStyle: { color: '#3182CE' }
+                                },
+                                {
+                                    value: component2Percentage,
+                                    itemStyle: { color: '#4A5568' }
+                                }
+                            ]
+                        }
+                    ]
+                };
+
+                chart.setOption(option);
+                
+                // Responsive
+                window.addEventListener('resize', () => {
+                    chart.resize();
+                });
+            }
+
+            renderWeeklyOverview() {
+                const container = document.getElementById('weekly-overview');
+                if (!container) return;
+
+                const weeklyData = revisionData.getWeeklyOverview();
+                container.innerHTML = '';
+
+                weeklyData.forEach(day => {
+                    const dayCard = document.createElement('div');
+                    dayCard.className = `p-4 rounded-lg border text-center ${
+                        day.completed ? 'bg-green-50 border-green-200' : 
+                        day.topics.length > 0 ? 'bg-yellow-50 border-yellow-200' : 
+                        'bg-gray-50 border-gray-200'
+                    }`;
+
+                    const completionPercentage = day.topics.length > 0 ? 
+                        Math.round((day.topics.filter(t => t.completed).length / day.topics.length) * 100) : 0;
+
+                    dayCard.innerHTML = `
+                        <div class="text-sm font-medium text-gray-800 mb-1">${day.dateStr}</div>
+                        <div class="text-xs text-gray-600 mb-2">${day.date.toLocaleDateString('en-GB', { weekday: 'short' })}</div>
+                        <div class="text-lg font-bold text-gray-800">${day.topics.length}</div>
+                        <div class="text-xs text-gray-500">topics</div>
+                        ${day.topics.length > 0 ? `
+                            <div class="mt-2">
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: ${completionPercentage}%"></div>
+                                </div>
+                                <div class="text-xs text-gray-500 mt-1">${completionPercentage}%</div>
+                            </div>
+                        ` : ''}
+                    `;
+
+                    container.appendChild(dayCard);
+                });
+            }
+
+            renderCalendar() {
+                const container = document.getElementById('calendar-grid');
+                const monthDisplay = document.getElementById('current-month');
+                
+                if (!container || !monthDisplay) return;
+
+                const year = this.currentMonth.getFullYear();
+                const month = this.currentMonth.getMonth();
+                
+                monthDisplay.textContent = this.currentMonth.toLocaleDateString('en-GB', { 
+                    month: 'long', 
+                    year: 'numeric' 
+                });
+
+                // Clear existing calendar
+                container.innerHTML = '';
+
+                // Add day headers
+                const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                dayHeaders.forEach(day => {
+                    const header = document.createElement('div');
+                    header.className = 'text-center text-sm font-medium text-gray-600 p-2';
+                    header.textContent = day;
+                    container.appendChild(header);
+                });
+
+                // Get first day of month and number of days
+                const firstDay = new Date(year, month, 1);
+                const lastDay = new Date(year, month + 1, 0);
+                const daysInMonth = lastDay.getDate();
+                const startingDayOfWeek = firstDay.getDay();
+
+                // Add empty cells for days before month starts
+                for (let i = 0; i < startingDayOfWeek; i++) {
+                    const emptyDay = document.createElement('div');
+                    emptyDay.className = 'p-2';
+                    container.appendChild(emptyDay);
+                }
+
+                // Add days of month
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dayElement = document.createElement('div');
+                    const currentDate = new Date(year, month, day);
+                    const topics = revisionData.getTopicForDate(currentDate);
+                    const isToday = this.isSameDay(currentDate, new Date());
+                    const isPast = currentDate < new Date();
+                    
+                    let status = 'pending';
+                    if (isToday) {
+                        status = 'today';
+                    } else if (topics.length > 0) {
+                        const completedCount = topics.filter(t => t.completed).length;
+                        if (completedCount === topics.length) {
+                            status = 'completed';
+                        } else if (completedCount > 0) {
+                            status = 'partial';
+                        } else if (isPast) {
+                            status = 'pending';
+                        }
+                    }
+
+                    dayElement.className = `calendar-day ${status} p-2 text-center text-sm font-medium rounded`;
+                    dayElement.textContent = day;
+                    dayElement.title = `${topics.length} topic${topics.length !== 1 ? 's' : ''}`;
+
+                    if (topics.length > 0) {
+                        dayElement.addEventListener('click', () => {
+                            window.location.href = `index.html?date=${revisionData.formatDate(currentDate)}`;
+                        });
+                    }
+
+                    container.appendChild(dayElement);
+                }
+            }
+
+            renderAchievements() {
+                const container = document.getElementById('achievements-grid');
+                if (!container) return;
+
+                const stats = revisionData.calculateProgressStats();
+                const completedTopics = stats.completed;
+                const streak = stats.streak;
+
+                container.innerHTML = '';
+
+                this.achievements.forEach(achievement => {
+                    const badge = document.createElement('div');
+                    
+                    let isEarned = false;
+                    switch (achievement.id) {
+                        case 'first_topic':
+                            isEarned = completedTopics >= 1;
+                            break;
+                        case 'week_streak':
+                            isEarned = streak >= 7;
+                            break;
+                        case 'half_complete':
+                            isEarned = completedTopics >= 78;
+                            break;
+                        case 'foundation_master':
+                            isEarned = revisionData.learningObjectives.filter(obj => 
+                                obj.difficulty === 'foundation' && obj.completed).length >= 25;
+                            break;
+                        case 'intermediate_champion':
+                            isEarned = revisionData.learningObjectives.filter(obj => 
+                                obj.difficulty === 'intermediate' && obj.completed).length >= 78;
+                            break;
+                        case 'advanced_expert':
+                            isEarned = revisionData.learningObjectives.filter(obj => 
+                                obj.difficulty === 'advanced' && obj.completed).length >= 53;
+                            break;
+                        case 'component_1_complete':
+                            const component1 = revisionData.learningObjectives.filter(obj => obj.componentId === '01');
+                            isEarned = component1.every(obj => obj.completed);
+                            break;
+                        case 'component_2_complete':
+                            const component2 = revisionData.learningObjectives.filter(obj => obj.componentId === '02');
+                            isEarned = component2.every(obj => obj.completed);
+                            break;
+                        case 'perfect_week':
+                            // Check if any 7-day period has all topics completed
+                            isEarned = this.checkPerfectWeek();
+                            break;
+                        case 'revision_master':
+                            isEarned = completedTopics >= 156;
+                            break;
+                        case 'consistent_learner':
+                            isEarned = streak >= 30;
+                            break;
+                        case 'speed_demon':
+                            // Check if any day has 10+ topics completed
+                            isEarned = this.checkSpeedDemon();
+                            break;
+                        default:
+                            isEarned = false;
+                    }
+
+                    badge.className = `achievement-badge ${isEarned ? 'earned' : 'locked'} p-4 rounded-lg text-center`;
+                    badge.innerHTML = `
+                        <div class="text-2xl mb-2">${achievement.icon}</div>
+                        <div class="text-sm font-medium mb-1">${achievement.name}</div>
+                        <div class="text-xs opacity-75">${achievement.description}</div>
+                    `;
+
+                    container.appendChild(badge);
+                });
+            }
+
+            checkPerfectWeek() {
+                const dates = revisionData.getDateRange();
+                for (let i = 0; i <= dates.length - 7; i++) {
+                    let weekComplete = true;
+                    for (let j = 0; j < 7; j++) {
+                        const dayTopics = revisionData.getTopicForDate(dates[i + j]);
+                        if (!dayTopics.every(topic => topic.completed)) {
+                            weekComplete = false;
+                            break;
+                        }
+                    }
+                    if (weekComplete) return true;
+                }
+                return false;
+            }
+
+            checkSpeedDemon() {
+                const dates = revisionData.getDateRange();
+                for (const date of dates) {
+                    const dayTopics = revisionData.getTopicForDate(date);
+                    const completedInDay = dayTopics.filter(topic => topic.completed).length;
+                    if (completedInDay >= 10) return true;
+                }
+                return false;
+            }
+
+            initializeAnimations() {
+                // Animate page elements on load
+                anime.timeline({
+                    easing: 'easeOutExpo',
+                    duration: 750
+                })
+                .add({
+                    targets: 'header',
+                    translateY: [-50, 0],
+                    opacity: [0, 1]
+                })
+                .add({
+                    targets: 'main > section',
+                    translateY: [30, 0],
+                    opacity: [0, 1],
+                    delay: anime.stagger(100)
+                }, '-=500');
+            }
+
+            isSameDay(date1, date2) {
+                return date1.getDate() === date2.getDate() &&
+                       date1.getMonth() === date2.getMonth() &&
+                       date1.getFullYear() === date2.getFullYear();
+            }
+        }
+
+        // Initialize progress page when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            window.progressPage = new ProgressPage();
+        });
+    </script>
+</body>
+</html>
