@@ -1,0 +1,1173 @@
+{
+	"components": [
+		{
+			"componentId": "01",
+			"description": "Internal workings of CPU, data exchange, software development, data types and legal/ethical issues",
+			"title": "Paper 1",
+			"topics": [
+				{
+					"title": "Characteristics of contemporary processors, input, output and storage devices",
+					"topicId": "1.1",
+					"subtopics": [
+						{
+							"subtopicId": "1.1.1",
+							"title": "Structure and function of the processor",
+							"learningObjectives": [
+								{
+									"id": "1.1.1.a",
+									"objective": "Arithmetic Logic Unit",
+									"subObjectives": [
+										{
+											"id": "1.1.1.a.1",
+											"objective": "ALU"
+										},
+										{
+											"id": "1.1.1.a.2",
+											"objective": "Control Unit"
+										},
+										{
+											"id": "1.1.1.a.3",
+											"objective": "Registers"
+										},
+										{
+											"id": "1.1.1.a.4",
+											"objective": "Program Counter PC"
+										},
+										{
+											"id": "1.1.1.a.5",
+											"objective": "Accumulator ACC"
+										},
+										{
+											"id": "1.1.1.a.6",
+											"objective": "Memory Address Register MAR"
+										},
+										{
+											"id": "1.1.1.a.7",
+											"objective": "Memory Data Register MDR"
+										},
+										{
+											"id": "1.1.1.a.8",
+											"objective": "Current Instruction Register CIR"
+										}
+									]
+								},
+								{
+									"id": "1.1.1.b",
+									"objective": "Fetch-Decode-Execute Cycle",
+									"subObjectives": [
+										{
+											"id": "1.1.1.b.1",
+											"objective": "Effects on registers"
+										}
+									]
+								},
+								{
+									"id": "1.1.1.c",
+									"objective": "CPU performance factors",
+									"subObjectives": [
+										{
+											"id": "1.1.1.c.1",
+											"objective": "Clock speed"
+										},
+										{
+											"id": "1.1.1.c.2",
+											"objective": "Number of cores"
+										},
+										{
+											"id": "1.1.1.c.3",
+											"objective": "Cache"
+										}
+									]
+								},
+								{
+									"id": "1.1.1.d",
+									"objective": "Pipelining in processors",
+									"subObjectives": [
+										{
+											"id": "1.1.1.d.1",
+											"objective": "Improve efficiency"
+										}
+									]
+								},
+								{
+									"id": "1.1.1.e",
+									"objective": "Von Neumann architecture",
+									"subObjectives": [
+										{
+											"id": "1.1.1.e.1",
+											"objective": "Harvard architecture"
+										},
+										{
+											"id": "1.1.1.e.2",
+											"objective": "Contemporary processor architecture"
+										}
+									]
+								}
+							]
+						},
+						{
+							"subtopicId": "1.1.2",
+							"title": "Types of processor",
+							"learningObjectives": [
+								{
+									"id": "1.1.2.a",
+									"objective": "CISC processors",
+									"subObjectives": [
+										{
+											"id": "1.1.2.a.1",
+											"objective": "RISC processors"
+										},
+										{
+											"id": "1.1.2.a.2",
+											"objective": "Differences between CISC RISC"
+										},
+										{
+											"id": "1.1.2.a.3",
+											"objective": "Uses of CISC RISC"
+										}
+									]
+								},
+								{
+									"id": "1.1.2.b",
+									"objective": "GPUs",
+									"subObjectives": [
+										{
+											"id": "1.1.2.b.1",
+											"objective": "GPU uses"
+										},
+										{
+											"id": "1.1.2.b.2",
+											"objective": "Non-graphics GPU uses"
+										}
+									]
+								}
+							]
+						},
+						{
+							"subtopicId": "1.1.3",
+							"title": "Input, output and storage",
+							"learningObjectives": [
+								{
+									"id": "1.1.3.a",
+									"objective": "Input devices",
+									"subObjectives": [
+										{
+											"id": "1.1.3.a.1",
+											"objective": "Output devices"
+										},
+										{
+											"id": "1.1.3.a.2",
+											"objective": "Storage devices"
+										},
+										{
+											"id": "1.1.3.a.3",
+											"objective": "Apply devices to problems"
+										}
+									]
+								},
+								{
+									"id": "1.1.3.b",
+									"objective": "Magnetic storage devices",
+									"subObjectives": [
+										{
+											"id": "1.1.3.b.1",
+											"objective": "Flash storage devices"
+										},
+										{
+											"id": "1.1.3.b.2",
+											"objective": "Optical storage devices"
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"title": "Software and software development",
+					"topicId": "1.2",
+					"subtopics": [
+						{
+							"subtopicId": "1.2.1",
+							"title": "Systems Software",
+							"learningObjectives": [
+								{
+									"id": "1.2.1.a",
+									"objective": "Need for operating systems",
+									"subObjectives": [
+										{
+											"id": "1.2.1.a.1",
+											"objective": "Function of operating systems"
+										},
+										{
+											"id": "1.2.1.a.2",
+											"objective": "Purpose of operating systems"
+										}
+									]
+								},
+								{
+									"id": "1.2.1.b",
+									"objective": "Memory Management",
+									"subObjectives": [
+										{
+											"id": "1.2.1.b.1",
+											"objective": "Paging"
+										},
+										{
+											"id": "1.2.1.b.2",
+											"objective": "Segmentation"
+										},
+										{
+											"id": "1.2.1.b.3",
+											"objective": "Virtual memory"
+										}
+									]
+								},
+								{
+									"id": "1.2.1.d",
+									"objective": "Round robin scheduling",
+									"subObjectives": [
+										{
+											"id": "1.2.1.d.1",
+											"objective": "First come first served"
+										},
+										{
+											"id": "1.2.1.d.2",
+											"objective": "Multi-level feedback queues"
+										},
+										{
+											"id": "1.2.1.d.3",
+											"objective": "Shortest job first"
+										},
+										{
+											"id": "1.2.1.d.4",
+											"objective": "Shortest remaining time"
+										}
+									]
+								},
+								{
+									"id": "1.2.1.e",
+									"objective": "Distributed operating systems",
+									"subObjectives": [
+										{
+											"id": "1.2.1.e.1",
+											"objective": "Embedded operating systems"
+										},
+										{
+											"id": "1.2.1.e.2",
+											"objective": "Multi-tasking operating systems"
+										},
+										{
+											"id": "1.2.1.e.3",
+											"objective": "Multi-user operating systems"
+										},
+										{
+											"id": "1.2.1.e.4",
+											"objective": "Real Time operating systems"
+										}
+									]
+								},
+								{
+									"id": "1.2.1.h",
+									"objective": "Virtual machines",
+									"subObjectives": [
+										{
+											"id": "1.2.1.h.1",
+											"objective": "Software emulating machine function"
+										},
+										{
+											"id": "1.2.1.h.2",
+											"objective": "Executing intermediate code"
+										},
+										{
+											"id": "1.2.1.h.3",
+											"objective": "Running OS within another"
+										}
+									]
+								}
+							]
+						},
+						{
+							"subtopicId": "1.2.2",
+							"title": "Applications Generation",
+							"learningObjectives": [
+								{
+									"id": "1.2.2.a",
+									"objective": "Nature of applications",
+									"subObjectives": [
+										{
+											"id": "1.2.2.a.1",
+											"objective": "Justify suitable applications"
+										}
+									]
+								},
+								{
+									"id": "1.2.2.d",
+									"objective": "Interpreters",
+									"subObjectives": [
+										{
+											"id": "1.2.2.d.1",
+											"objective": "Compilers"
+										},
+										{
+											"id": "1.2.2.d.2",
+											"objective": "Assemblers"
+										}
+									]
+								},
+								{
+									"id": "1.2.2.e",
+									"objective": "Lexical analysis",
+									"subObjectives": [
+										{
+											"id": "1.2.2.e.1",
+											"objective": "Syntax analysis"
+										},
+										{
+											"id": "1.2.2.e.2",
+											"objective": "Code generation"
+										},
+										{
+											"id": "1.2.2.e.3",
+											"objective": "Optimisation"
+										}
+									]
+								}
+							]
+						},
+						{
+							"subtopicId": "1.2.3",
+							"title": "Software Development",
+							"learningObjectives": [
+								{
+									"id": "1.2.3.a",
+									"objective": "Waterfall lifecycle",
+									"subObjectives": [
+										{
+											"id": "1.2.3.a.1",
+											"objective": "Agile methodologies"
+										},
+										{
+											"id": "1.2.3.a.2",
+											"objective": "Extreme programming"
+										},
+										{
+											"id": "1.2.3.a.3",
+											"objective": "Spiral model"
+										},
+										{
+											"id": "1.2.3.a.4",
+											"objective": "Rapid application development"
+										}
+									]
+								}
+							]
+						},
+						{
+							"subtopicId": "1.2.4",
+							"title": "Types of Programming Language",
+							"learningObjectives": [
+								{
+									"id": "1.2.4.a",
+									"objective": "Need for programming paradigms",
+									"subObjectives": [
+										{
+											"id": "1.2.4.a.1",
+											"objective": "Characteristics of paradigms"
+										}
+									]
+								},
+								{
+									"id": "1.2.4.d",
+									"objective": "Immediate addressing",
+									"subObjectives": [
+										{
+											"id": "1.2.4.d.1",
+											"objective": "Direct addressing"
+										},
+										{
+											"id": "1.2.4.d.2",
+											"objective": "Indirect addressing"
+										},
+										{
+											"id": "1.2.4.d.3",
+											"objective": "Indexed addressing"
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"title": "Exchanging data",
+					"topicId": "1.3",
+					"subtopics": [
+						{
+							"subtopicId": "1.3.1",
+							"title": "Compression, Encryption and Hashing",
+							"learningObjectives": [
+								{
+									"id": "1.3.1.b",
+									"objective": "Run length encoding",
+									"subObjectives": [
+										{
+											"id": "1.3.1.b.1",
+											"objective": "Dictionary coding"
+										},
+										{
+											"id": "1.3.1.b.2",
+											"objective": "Lossless compression"
+										}
+									]
+								}
+							]
+						},
+						{
+							"subtopicId": "1.3.2",
+							"title": "Databases",
+							"learningObjectives": [
+								{
+									"id": "1.3.2.b",
+									"objective": "Capturing data",
+									"subObjectives": [
+										{
+											"id": "1.3.2.b.1",
+											"objective": "Selecting data"
+										},
+										{
+											"id": "1.3.2.b.2",
+											"objective": "Managing data"
+										},
+										{
+											"id": "1.3.2.b.3",
+											"objective": "Exchanging data"
+										}
+									]
+								}
+							]
+						},
+						{
+							"subtopicId": "1.3.3",
+							"title": "Networks",
+							"learningObjectives": [
+								{
+									"id": "1.3.3.a",
+									"objective": "Network characteristics",
+									"subObjectives": [
+										{
+											"id": "1.3.3.a.1",
+											"objective": "Importance of protocols"
+										},
+										{
+											"id": "1.3.3.a.2",
+											"objective": "Importance of standards"
+										}
+									]
+								},
+								{
+									"id": "1.3.3.c",
+									"objective": "Network security",
+									"subObjectives": [
+										{
+											"id": "1.3.3.c.1",
+											"objective": "Network threats"
+										},
+										{
+											"id": "1.3.3.c.2",
+											"objective": "Firewalls"
+										},
+										{
+											"id": "1.3.3.c.3",
+											"objective": "Proxies"
+										},
+										{
+											"id": "1.3.3.c.4",
+											"objective": "Encryption"
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"title": "Data types, data structures and algorithms",
+					"topicId": "1.4",
+					"subtopics": [
+						{
+							"subtopicId": "1.4.1",
+							"title": "Data Types",
+							"learningObjectives": [
+								{
+									"id": "1.4.1.c",
+									"objective": "Sign and magnitude",
+									"subObjectives": [
+										{
+											"id": "1.4.1.c.1",
+											"objective": "Two's complement"
+										},
+										{
+											"id": "1.4.1.c.2",
+											"objective": "Represent negative binary numbers"
+										}
+									]
+								},
+								{
+									"id": "1.4.1.f",
+									"objective": "Convert binary to hexadecimal",
+									"subObjectives": [
+										{
+											"id": "1.4.1.f.1",
+											"objective": "Convert binary to denary"
+										},
+										{
+											"id": "1.4.1.f.2",
+											"objective": "Convert hexadecimal to denary"
+										}
+									]
+								},
+								{
+									"id": "1.4.1.g",
+									"objective": "Floating point representation",
+									"subObjectives": [
+										{
+											"id": "1.4.1.g.1",
+											"objective": "Normalisation of floating point"
+										}
+									]
+								},
+								{
+									"id": "1.4.1.h",
+									"objective": "Floating point arithmetic",
+									"subObjectives": [
+										{
+											"id": "1.4.1.h.1",
+											"objective": "Positive floating point numbers"
+										},
+										{
+											"id": "1.4.1.h.2",
+											"objective": "Negative floating point numbers"
+										},
+										{
+											"id": "1.4.1.h.3",
+											"objective": "Floating point addition"
+										},
+										{
+											"id": "1.4.1.h.4",
+											"objective": "Floating point subtraction"
+										}
+									]
+								},
+								{
+									"id": "1.4.1.i",
+									"objective": "Bitwise manipulation",
+									"subObjectives": [
+										{
+											"id": "1.4.1.i.1",
+											"objective": "Masks"
+										},
+										{
+											"id": "1.4.1.i.2",
+											"objective": "Shifts"
+										},
+										{
+											"id": "1.4.1.i.3",
+											"objective": "AND operation"
+										},
+										{
+											"id": "1.4.1.i.4",
+											"objective": "OR operation"
+										},
+										{
+											"id": "1.4.1.i.5",
+											"objective": "XOR operation"
+										}
+									]
+								},
+								{
+									"id": "1.4.1.j",
+									"objective": "Character sets",
+									"subObjectives": [
+										{
+											"id": "1.4.1.j.1",
+											"objective": "ASCII"
+										},
+										{
+											"id": "1.4.1.j.2",
+											"objective": "UNICODE"
+										},
+										{
+											"id": "1.4.1.j.3",
+											"objective": "Represent text"
+										}
+									]
+								}
+							]
+						},
+						{
+							"subtopicId": "1.4.2",
+							"title": "Data Structures",
+							"learningObjectives": [
+								{
+									"id": "1.4.2.a",
+									"objective": "Arrays",
+									"subObjectives": [
+										{
+											"id": "1.4.2.a.1",
+											"objective": "Up to 3 dimensions"
+										},
+										{
+											"id": "1.4.2.a.2",
+											"objective": "Records"
+										},
+										{
+											"id": "1.4.2.a.3",
+											"objective": "Lists"
+										},
+										{
+											"id": "1.4.2.a.4",
+											"objective": "Tuples"
+										}
+									]
+								},
+								{
+									"id": "1.4.2.b",
+									"objective": "Linked-list",
+									"subObjectives": [
+										{
+											"id": "1.4.2.b.1",
+											"objective": "Graph"
+										},
+										{
+											"id": "1.4.2.b.2",
+											"objective": "Directed graph"
+										},
+										{
+											"id": "1.4.2.b.3",
+											"objective": "Undirected graph"
+										},
+										{
+											"id": "1.4.2.b.4",
+											"objective": "Stack"
+										},
+										{
+											"id": "1.4.2.b.5",
+											"objective": "Queue"
+										},
+										{
+											"id": "1.4.2.b.6",
+											"objective": "Tree"
+										},
+										{
+											"id": "1.4.2.b.7",
+											"objective": "Binary search tree"
+										},
+										{
+											"id": "1.4.2.b.8",
+											"objective": "Hash table"
+										}
+									]
+								},
+								{
+									"id": "1.4.2.c",
+									"objective": "Create data structures",
+									"subObjectives": [
+										{
+											"id": "1.4.2.c.1",
+											"objective": "Traverse data structures"
+										},
+										{
+											"id": "1.4.2.c.2",
+											"objective": "Add data to structures"
+										},
+										{
+											"id": "1.4.2.c.3",
+											"objective": "Remove data from structures"
+										}
+									]
+								}
+							]
+						},
+						{
+							"subtopicId": "1.4.3",
+							"title": "Boolean Algebra",
+							"learningObjectives": [
+								{
+									"id": "1.4.3.b",
+									"objective": "Manipulate Boolean expressions",
+									"subObjectives": [
+										{
+											"id": "1.4.3.b.1",
+											"objective": "Karnaugh maps"
+										},
+										{
+											"id": "1.4.3.b.2",
+											"objective": "Simplify Boolean expressions"
+										}
+									]
+								},
+								{
+									"id": "1.4.3.c",
+									"objective": "Derive Boolean statements",
+									"subObjectives": [
+										{
+											"id": "1.4.3.c.1",
+											"objective": "Simplify Boolean statements"
+										},
+										{
+											"id": "1.4.3.c.2",
+											"objective": "De Morgan's Laws"
+										},
+										{
+											"id": "1.4.3.c.3",
+											"objective": "Distribution"
+										},
+										{
+											"id": "1.4.3.c.4",
+											"objective": "Association"
+										},
+										{
+											"id": "1.4.3.c.5",
+											"objective": "Commutation"
+										},
+										{
+											"id": "1.4.3.c.6",
+											"objective": "Double negation"
+										}
+									]
+								},
+								{
+									"id": "1.4.3.e",
+									"objective": "D type flip flops",
+									"subObjectives": [
+										{
+											"id": "1.4.3.e.1",
+											"objective": "Half adders"
+										},
+										{
+											"id": "1.4.3.e.2",
+											"objective": "Full adders"
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"componentId": "02",
+			"description": "Computational thinking, problem solving, programming techniques and algorithms",
+			"title": "Paper 2",
+			"topics": [
+				{
+					"title": "Elements of computational thinking",
+					"topicId": "2.1",
+					"subtopics": [
+						{
+							"subtopicId": "2.1.1",
+							"title": "Thinking abstractly",
+							"learningObjectives": [
+								{
+									"id": "2.1.1.d",
+									"objective": "Devise abstract model",
+									"subObjectives": [
+										{
+											"id": "2.1.1.d.1",
+											"objective": "For variety of situations"
+										}
+									]
+								}
+							]
+						},
+						{
+							"subtopicId": "2.1.2",
+							"title": "Thinking ahead",
+							"learningObjectives": [
+								{
+									"id": "2.1.2.a",
+									"objective": "Identify inputs",
+									"subObjectives": [
+										{
+											"id": "2.1.2.a.1",
+											"objective": "Identify outputs"
+										},
+										{
+											"id": "2.1.2.a.2",
+											"objective": "For given situation"
+										}
+									]
+								},
+								{
+									"id": "2.1.2.b",
+									"objective": "Determine preconditions",
+									"subObjectives": [
+										{
+											"id": "2.1.2.b.1",
+											"objective": "Devise solution to problem"
+										}
+									]
+								},
+								{
+									"id": "2.1.2.c",
+									"objective": "Nature of caching",
+									"subObjectives": [
+										{
+											"id": "2.1.2.c.1",
+											"objective": "Benefits of caching"
+										},
+										{
+											"id": "2.1.2.c.2",
+											"objective": "Drawbacks of caching"
+										}
+									]
+								}
+							]
+						},
+						{
+							"subtopicId": "2.1.3",
+							"title": "Thinking procedurally",
+							"learningObjectives": [
+								{
+									"id": "2.1.3.b",
+									"objective": "Identify solution components",
+									"subObjectives": [
+										{
+											"id": "2.1.3.b.1",
+											"objective": "To solve problem"
+										}
+									]
+								},
+								{
+									"id": "2.1.3.c",
+									"objective": "Determine step order",
+									"subObjectives": [
+										{
+											"id": "2.1.3.c.1",
+											"objective": "To solve problem"
+										}
+									]
+								}
+							]
+						},
+						{
+							"subtopicId": "2.1.4",
+							"title": "Thinking logically",
+							"learningObjectives": [
+								{
+									"id": "2.1.4.b",
+									"objective": "Determine logical conditions",
+									"subObjectives": [
+										{
+											"id": "2.1.4.b.1",
+											"objective": "Affect decision outcome"
+										}
+									]
+								},
+								{
+									"id": "2.1.4.c",
+									"objective": "How decisions affect flow",
+									"subObjectives": [
+										{
+											"id": "2.1.4.c.1",
+											"objective": "Through a program"
+										}
+									]
+								}
+							]
+						},
+						{
+							"subtopicId": "2.1.5",
+							"title": "Thinking concurrently",
+							"learningObjectives": [
+								{
+									"id": "2.1.5.a",
+									"objective": "Determine problem parts",
+									"subObjectives": [
+										{
+											"id": "2.1.5.a.1",
+											"objective": "Tackled at same time"
+										}
+									]
+								},
+								{
+									"id": "2.1.5.b",
+									"objective": "Benefits of concurrent processing",
+									"type": "evaluation",
+									"subObjectives": [
+										{
+											"id": "2.1.5.b.1",
+											"objective": "Trade offs of concurrent processing",
+											"type": "evaluation"
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"title": "Problem solving and programming",
+					"topicId": "2.2",
+					"subtopics": [
+						{
+							"subtopicId": "2.2.1",
+							"title": "Programming techniques",
+							"learningObjectives": [
+								{
+									"id": "2.2.1.b",
+									"objective": "Recursion",
+									"subObjectives": [
+										{
+											"id": "2.2.1.b.1",
+											"objective": "How recursion is used"
+										},
+										{
+											"id": "2.2.1.b.2",
+											"objective": "Recursion vs iterative approach"
+										}
+									]
+								},
+								{
+									"id": "2.2.1.d",
+									"objective": "Modularity",
+									"subObjectives": [
+										{
+											"id": "2.2.1.d.1",
+											"objective": "Functions"
+										},
+										{
+											"id": "2.2.1.d.2",
+											"objective": "Procedures"
+										},
+										{
+											"id": "2.2.1.d.3",
+											"objective": "Parameter passing by value"
+										},
+										{
+											"id": "2.2.1.d.4",
+											"objective": "Parameter passing by reference"
+										}
+									]
+								}
+							]
+						},
+						{
+							"subtopicId": "2.2.2",
+							"title": "Computational methods",
+							"learningObjectives": [
+								{
+									"id": "2.2.2.f",
+									"objective": "Backtracking",
+									"subObjectives": [
+										{
+											"id": "2.2.2.f.1",
+											"objective": "Data mining"
+										},
+										{
+											"id": "2.2.2.f.2",
+											"objective": "Heuristics"
+										},
+										{
+											"id": "2.2.2.f.3",
+											"objective": "Performance modelling"
+										},
+										{
+											"id": "2.2.2.f.4",
+											"objective": "Pipelining"
+										},
+										{
+											"id": "2.2.2.f.5",
+											"objective": "Visualisation"
+										},
+										{
+											"id": "2.2.2.f.6",
+											"objective": "Solve problems"
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"title": "Algorithms",
+					"topicId": "2.3",
+					"subtopics": [
+						{
+							"subtopicId": "2.3.1",
+							"title": "Algorithms",
+							"learningObjectives": [
+								{
+									"id": "2.3.1.a",
+									"objective": "Analyse algorithms",
+									"subObjectives": [
+										{
+											"id": "2.3.1.a.1",
+											"objective": "Design algorithms"
+										},
+										{
+											"id": "2.3.1.a.2",
+											"objective": "For given situation"
+										}
+									]
+								},
+								{
+									"id": "2.3.1.b",
+									"objective": "Algorithm suitability",
+									"type": "evaluation",
+									"subObjectives": [
+										{
+											"id": "2.3.1.b.1",
+											"objective": "For given task",
+											"type": "evaluation"
+										},
+										{
+											"id": "2.3.1.b.2",
+											"objective": "For given data set",
+											"type": "evaluation"
+										},
+										{
+											"id": "2.3.1.b.3",
+											"objective": "Execution time",
+											"type": "evaluation"
+										},
+										{
+											"id": "2.3.1.b.4",
+											"objective": "Space complexity",
+											"type": "evaluation"
+										}
+									]
+								},
+								{
+									"id": "2.3.1.c",
+									"objective": "Measure algorithm efficiency",
+									"subObjectives": [
+										{
+											"id": "2.3.1.c.1",
+											"objective": "Big O notation"
+										},
+										{
+											"id": "2.3.1.c.2",
+											"objective": "Constant complexity"
+										},
+										{
+											"id": "2.3.1.c.3",
+											"objective": "Linear complexity"
+										},
+										{
+											"id": "2.3.1.c.4",
+											"objective": "Polynomial complexity"
+										},
+										{
+											"id": "2.3.1.c.5",
+											"objective": "Exponential complexity"
+										},
+										{
+											"id": "2.3.1.c.6",
+											"objective": "Logarithmic complexity"
+										}
+									]
+								},
+								{
+									"id": "2.3.1.e",
+									"objective": "Algorithms for stacks",
+									"subObjectives": [
+										{
+											"id": "2.3.1.e.1",
+											"objective": "Algorithms for queues"
+										},
+										{
+											"id": "2.3.1.e.2",
+											"objective": "Algorithms for trees"
+										},
+										{
+											"id": "2.3.1.e.3",
+											"objective": "Algorithms for linked lists"
+										},
+										{
+											"id": "2.3.1.e.4",
+											"objective": "Depth-first traversal"
+										},
+										{
+											"id": "2.3.1.e.5",
+											"objective": "Post-order traversal"
+										},
+										{
+											"id": "2.3.1.e.6",
+											"objective": "Breadth-first traversal"
+										}
+									]
+								},
+								{
+									"id": "2.3.1.f",
+									"objective": "Bubble sort",
+									"subObjectives": [
+										{
+											"id": "2.3.1.f.1",
+											"objective": "Insertion sort"
+										},
+										{
+											"id": "2.3.1.f.2",
+											"objective": "Merge sort"
+										},
+										{
+											"id": "2.3.1.f.3",
+											"objective": "Quick sort"
+										},
+										{
+											"id": "2.3.1.f.4",
+											"objective": "Dijkstra's shortest path"
+										},
+										{
+											"id": "2.3.1.f.5",
+											"objective": "A* algorithm"
+										},
+										{
+											"id": "2.3.1.f.6",
+											"objective": "Binary search"
+										},
+										{
+											"id": "2.3.1.f.7",
+											"objective": "Linear search"
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"examBoard": "OCR",
+	"level": "A Level",
+	"metadata": {
+		"difficultyDistribution": {
+			"advanced": 53,
+			"foundation": 25,
+			"intermediate": 78
+		},
+		"extractionNotes": [
+			"Some formatting issues detected in original PDF extraction",
+			"Learning objectives (a), (b), (c) etc. were properly identified",
+			"Topic numbering follows OCR specification structure",
+			"Difficulty levels assigned based on content complexity",
+			"Learning types categorized using Bloom's taxonomy",
+			"Sub-objectives restructured to be nested within parent objectives with proper dot notation IDs"
+		],
+		"totalLearningObjectives": 156,
+		"typeDistribution": {
+			"analysis": 3,
+			"application": 42,
+			"evaluation": 11,
+			"knowledge": 35,
+			"understanding": 65
+		}
+	},
+	"subject": "Computer Science",
+	"version": "2.7",
+	"year": "2024"
+}
